@@ -1,8 +1,10 @@
 package pl.ravduda.restapi.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,7 +15,9 @@ import java.util.List;
 @Data
 @Entity
 @Builder
-@Table(name = "user")
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "userdata")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

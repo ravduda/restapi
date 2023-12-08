@@ -35,15 +35,18 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorize) -> authorize
-//                        .requestMatchers(mvc.pattern("/h2-console/")).permitAll()
-//                        .requestMatchers(mvc.pattern("/h2-console/**")).permitAll()
-                                .anyRequest().permitAll()
-//                        .anyRequest().authenticated()
+                        .requestMatchers(mvc.pattern("/h2-console/**")).permitAll()
+                        .requestMatchers(mvc.pattern("/webjars/**")).permitAll()
+                        .requestMatchers(mvc.pattern("/posts")).permitAll()
+                        .requestMatchers(mvc.pattern("/auth/register")).permitAll()
+                        .requestMatchers(mvc.pattern("/auth/authenticate")).permitAll()
+//                                .anyRequest().permitAll()
+                        .anyRequest().authenticated()
                 )
                 .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                .headers().addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN));
+                .headers(header -> header.addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN)));
         return http.build();
     }
 
